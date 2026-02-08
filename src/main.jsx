@@ -1,16 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import { BookProvider } from './context/BookContext';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import { BrowserRouter } from 'react-router-dom'
+import { BookProvider } from './context/BookContext'
+import { AuthProvider } from './context/AuthContext'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <BookProvider>
-        <App />
-      </BookProvider>
+      <AuthProvider>
+        <BookProvider>
+          <App />
+        </BookProvider>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
-);
+)
