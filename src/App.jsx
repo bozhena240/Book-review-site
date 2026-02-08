@@ -15,7 +15,7 @@ function App() {
           <main className="main-content">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/book/:id" element={<BookDetail />} />
+             <Route path="/book/:id" element={<BookDetail />} /> 
               <Route path="/favorites" element={<Favorites />} />
             </Routes>
           </main>
