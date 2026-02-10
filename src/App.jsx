@@ -3,6 +3,8 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import BookDetail from './pages/BookDetail';
 import Favorites from './pages/Favorites';
+import Login from './pages/Login'; 
+import Signup from './pages/Signup';
 import './App.css';
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/book/:id" element={<BookDetail />} /> 
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/login" element={<Login />} />   
+          <Route path="/signup" element={<Signup />} />
         </Routes>
       </main>
       <footer className="footer">
