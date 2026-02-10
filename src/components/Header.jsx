@@ -1,8 +1,11 @@
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext'; 
 import { auth } from '../firebase/config';
 import { signOut } from 'firebase/auth';
 
 const Header = () => {
+  const { user } = useAuth(); 
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -31,11 +34,20 @@ const Header = () => {
                 My Favorites
               </NavLink>
             </li>
-            <li>
-              <button onClick={handleLogout} className="btn btn-secondary">
-                <i className="fas fa-sign-out-alt"></i> Logout
-              </button>
-            </li>
+            
+            {user ? (
+              <li>
+                <button onClick={handleLogout} className="btn-logout">
+                  <i className="fas fa-sign-out-alt"></i> Logout
+                </button>
+              </li>
+            ) : (
+              <li>
+                <NavLink to="/login" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                  Login
+                </NavLink>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
