@@ -1,51 +1,65 @@
-import { useState, useEffect } from 'react';
-import BookCard from '../components/BookCard';
 import { useBooks } from '../context/BookContext';
-import './Home.css';
-
-const genres = [
-  'Fiction', 'Fantasy', 'Mystery', 'Romance', 'Science Fiction', 
-  'Biography', 'History', 'Philosophy', 'Poetry', 'Drama'
-];
+import BookCard from '../components/BookCard';
+import Loading from '../components/Loading';
 
 const Home = () => {
   const { books, loading, error, fetchBooksByGenre } = useBooks();
-  const [selectedGenre, setSelectedGenre] = useState('Fiction');
 
-  useEffect(() => {
-    fetchBooksByGenre(selectedGenre);
-  }, [selectedGenre, fetchBooksByGenre]);
+  const genres = [
+    "Fiction", 
+    "Fantasy", 
+    "Mystery", 
+    "Romance", 
+    "Science Fiction", 
+    "History",
+    "Philosophy",
+    "Poetry",
+    "Drama"
+  ];
 
-  if (loading && books.length === 0) {
-    return <div className="loading-container"><div className="loading-spinner"></div></div>;
-  }
+  if (loading) return <Loading />;
+
+  if (error) return (
+    <div className="error-container">
+      <p className="error-msg">The archives are temporarily unreachable. {error}</p>
+    </div>
+  );
 
   return (
-    <div className="home">
-      <div className="hero">
-        <h1 className="hero-title">Curated Reviews for the Literary Mind</h1>
-        <p className="hero-subtitle">Discover profound insights into literature across genres.</p>
-      </div>
-      
-      <div className="genre-filter">
-        <h2 className="section-title">Browse by Genre</h2>
-        <div className="genre-buttons">
+    <div className="home-container">
+      {/* Hero Section */}
+      <section className="hero">
+        <div className="hero-overlay">
+          <h1 className="hero-title">Curated Reviews for the Literary Mind</h1>
+          <p className="hero-subtitle">Discover profound insights into literature across genres.</p>
+        </div>
+      </section>
+
+      {/* Genre Filter Bar */}
+      <div className="genre-section">
+        <h3 className="section-label">Browse by Genre</h3>
+        <div className="genre-filters">
           {genres.map(genre => (
-            <button
-              key={genre}
-              className={`genre-btn ${selectedGenre === genre ? 'active' : ''}`}
-              onClick={() => setSelectedGenre(genre)}
+            <button 
+              key={genre} 
+              className="genre-btn"
+              onClick={() => fetchBooksByGenre(genre)}
             >
               {genre}
             </button>
           ))}
         </div>
       </div>
-      
+
+      {/* Main Books Grid */}
       <div className="books-grid">
-        {books.map(book => (
-          <BookCard key={book.id} book={book} />
-        ))}
+        {books.length > 0 ? (
+          books.map(book => (
+            <BookCard key={book.id} book={book} />
+          ))
+        ) : (
+          <p className="empty-msg">No volumes found in this section of the library.</p>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 const BASE_URL = 'https://www.googleapis.com/books/v1';
 
-// add api later 
 const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY || '';
 
 export const searchBooks = async (query, maxResults = 20) => {
