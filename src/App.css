@@ -363,3 +363,53 @@ body {
   transform: scale(1.1);
   background-color: var(--pastel-cream);
 }
+
+/* Reviews */ 
+.review-form { margin-top: 3rem; border-top: 1px solid var(--accent-brown); padding-top: 2rem; }
+.review-card { 
+  background: var(--secondary-dark); 
+  padding: 1.5rem; 
+  border-left: 3px solid var(--gold-accent); 
+  margin-bottom: 1rem;
+  font-family: var(--font-serif);
+}
+.review-meta { color: var(--gold-accent); font-size: 0.9rem; margin-bottom: 0.5rem; } 
+
+.book-main-info {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.detail-image {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid var(--gold-accent);
+}
+
+.archive-discussion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* delete button for reviews */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-delete-review {
+  background: none;
+  border: none;
+  color: #a08c7d; 
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 5px;
+}
+
+.btn-delete-review:hover {
+  color: #c9a8a8; 
+}

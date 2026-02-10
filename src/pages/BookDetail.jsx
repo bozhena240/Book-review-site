@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBookById } from '../services/booksAPI';
+import ReviewForm from '../components/ReviewForm'; 
+import ReviewList from '../components/ReviewList'; 
 
 const BookDetail = () => {
   const { id } = useParams();
@@ -11,7 +13,6 @@ const BookDetail = () => {
     const fetchBook = async () => {
       try {
         const data = await getBookById(id);
-        // Transform Google Books data to format
         setBook({
           title: data.volumeInfo.title,
           author: data.volumeInfo.authors?.join(', '),
@@ -45,6 +46,11 @@ const BookDetail = () => {
           <div className="detail-description" dangerouslySetInnerHTML={{ __html: book.description }} />
         </div>
       </div>
+
+      <section className="discussion-section">
+        <ReviewForm bookId={id} bookTitle={book.title} />
+        <ReviewList bookId={id} />
+      </section>
     </div>
   );
 };
