@@ -22,7 +22,6 @@ export const BookProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
 
-  // Fetch initial books when the app first loads
   useEffect(() => {
     const fetchInitialBooks = async () => {
       setLoading(true);
@@ -62,6 +61,10 @@ export const BookProvider = ({ children }) => {
     }
   };
 
+  const clearSearch = () => {
+    setSearchResults([]);
+  };
+
   const value = {
     books,
     loading,
@@ -69,7 +72,8 @@ export const BookProvider = ({ children }) => {
     searchResults,
     handleSearch,
     fetchBooksByGenre,
-    getBookById
+    getBookById,
+    clearSearch 
   };
 
   return (

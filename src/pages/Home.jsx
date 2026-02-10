@@ -9,7 +9,8 @@ const Home = () => {
     searchResults, 
     loading, 
     error, 
-    fetchBooksByGenre 
+    fetchBooksByGenre,
+    clearSearch 
   } = useBooks();
 
   const genres = [
@@ -45,7 +46,10 @@ const Home = () => {
             <button 
               key={genre} 
               className="genre-btn"
-              onClick={() => fetchBooksByGenre(genre)}
+              onClick={() => {
+                clearSearch(); 
+                fetchBooksByGenre(genre);
+              }}
             >
               {genre}
             </button>
@@ -53,7 +57,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Main Books Grid using displayedBooks */}
+      {/* Main Books Grid */}
       <div className="books-grid">
         {displayedBooks.length > 0 ? (
           displayedBooks.map(book => (
