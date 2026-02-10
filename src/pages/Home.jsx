@@ -4,32 +4,20 @@ import Loading from '../components/Loading';
 import SearchBar from '../components/SearchBar';
 
 const Home = () => {
-  const { books, loading, error, fetchBooksByGenre } = useBooks();
+  const { 
+    books, 
+    searchResults, 
+    loading, 
+    error, 
+    fetchBooksByGenre 
+  } = useBooks();
 
   const genres = [
-    "Fiction", 
-    "Fantasy", 
-    "Mystery", 
-    "Romance", 
-    "Science Fiction", 
-    "History",
-    "Philosophy",
-    "Poetry",
-    "Drama"
+    "Fiction", "Fantasy", "Mystery", "Romance", 
+    "Science Fiction", "History", "Philosophy", "Poetry", "Drama"
   ];
 
-  const Home = () => {
-  const { books, searchResults, loading, error } = useBooks();
-  const displayedBooks = searchResults.length > 0 ? searchResults : books;
-  return (
-    <div className="home-container">
-      <section className="hero">
-        <h1 className="hero-title">Curated Reviews for the Literary Mind</h1>
-        <SearchBar /> 
-      </section>
-    </div>
-  );
-};
+  const displayedBooks = searchResults && searchResults.length > 0 ? searchResults : books;
 
   if (loading) return <Loading />;
 
@@ -41,15 +29,15 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero-overlay">
           <h1 className="hero-title">Curated Reviews for the Literary Mind</h1>
           <p className="hero-subtitle">Discover profound insights into literature across genres.</p>
+          <SearchBar /> 
         </div>
       </section>
 
-      {/* Genre Filter Bar */}
+      {/* Genre Filter Bar  */}
       <div className="genre-section">
         <h3 className="section-label">Browse by Genre</h3>
         <div className="genre-filters">
@@ -65,10 +53,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Main Books Grid */}
+      {/* Main Books Grid using displayedBooks */}
       <div className="books-grid">
-        {books.length > 0 ? (
-          books.map(book => (
+        {displayedBooks.length > 0 ? (
+          displayedBooks.map(book => (
             <BookCard key={book.id} book={book} />
           ))
         ) : (
