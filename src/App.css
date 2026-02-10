@@ -194,3 +194,54 @@ body {
   margin-bottom: 0.5rem;
   color: var(--pastel-cream);
 }
+
+/* login */ 
+/* Auth Pages */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.auth-form {
+  background-color: var(--secondary-dark);
+  padding: 3rem;
+  border-radius: 8px;
+  border: 1px solid var(--gold-accent);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.auth-title {
+  font-family: var(--font-serif);
+  color: var(--gold-accent);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--primary-dark);
+  border: 1px solid var(--accent-brown);
+  color: var(--text-light);
+  font-family: var(--font-serif);
+}
+
+.btn-auth {
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--gold-accent);
+  color: var(--primary-dark);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.btn-auth:hover {
+  opacity: 0.8;
+}
