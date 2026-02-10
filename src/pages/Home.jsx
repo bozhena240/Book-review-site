@@ -1,6 +1,7 @@
 import { useBooks } from '../context/BookContext';
 import BookCard from '../components/BookCard';
 import Loading from '../components/Loading';
+import SearchBar from '../components/SearchBar';
 
 const Home = () => {
   const { books, loading, error, fetchBooksByGenre } = useBooks();
@@ -16,6 +17,19 @@ const Home = () => {
     "Poetry",
     "Drama"
   ];
+
+  const Home = () => {
+  const { books, searchResults, loading, error } = useBooks();
+  const displayedBooks = searchResults.length > 0 ? searchResults : books;
+  return (
+    <div className="home-container">
+      <section className="hero">
+        <h1 className="hero-title">Curated Reviews for the Literary Mind</h1>
+        <SearchBar /> 
+      </section>
+    </div>
+  );
+};
 
   if (loading) return <Loading />;
 
