@@ -1,33 +1,35 @@
 import { Link } from 'react-router-dom';
-import { db, auth } from '../firebase/config';
+import { db } from '../firebase/config';
+import { useAuth } from '../context/AuthContext';
 import { doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
 
 const BookCard = ({ book }) => {
+  const { user } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Check if book already in favorites when card loads
   useEffect(() => {
     const checkFavoriteStatus = async () => {
-      if (auth.currentUser) {
-        const favoriteRef = doc(db, 'users', auth.currentUser.uid, 'favorites', book.id);
+      if (user) {
+        const favoriteRef = doc(db, 'users', user.uid, 'favorites', book.id);
         const favoriteSnap = await getDoc(favoriteRef);
         setIsFavorite(favoriteSnap.exists());
       }
     };
     checkFavoriteStatus();
-  }, [book.id]);
+  }, [book.id, user]);
 
-  const handleFavoriteToggle = async () => {
-    if (!auth.currentUser) {
-      alert('Please log in to save favorites');
+  const handleFavoriteToggle = async (e) => {
+    e.preventDefault(); 
+    if (!user) {
+      alert('Please log in to save favorites to your archive.');
       return;
     }
     
     setLoading(true);
     try {
-      const favoriteRef = doc(db, 'users', auth.currentUser.uid, 'favorites', book.id);
+      const favoriteRef = doc(db, 'users', user.uid, 'favorites', book.id);
       
       if (isFavorite) {
         await deleteDoc(favoriteRef);
@@ -40,7 +42,7 @@ const BookCard = ({ book }) => {
         setIsFavorite(true);
       }
     } catch (error) {
-      console.error("Error toggling favorite:", error);
+      console.error("The archive resisted your request:", error);
     } finally {
       setLoading(false);
     }
@@ -51,11 +53,20 @@ const BookCard = ({ book }) => {
       <div className="book-image-container">
         <img src={book.imageUrl} alt={book.title} className="book-image" />
         <div className="book-genre">{book.genre}</div>
+        <button 
+          onClick={handleFavoriteToggle} 
+          className={`fav-icon-btn ${isFavorite ? 'active' : ''}`}
+          disabled={loading}
+          aria-label="Toggle Favorite"
+        >
+          <i className={`${isFavorite ? 'fas' : 'far'} fa-heart`}></i>
+        </button>
       </div>
       
       <div className="book-content">
         <h3 className="book-title">{book.title}</h3>
         <p className="book-author">by {book.author}</p>
+        
         <div className="book-rating">
           {[...Array(5)].map((_, i) => (
             <i 
@@ -63,24 +74,14 @@ const BookCard = ({ book }) => {
               className={`fas fa-star ${i < Math.floor(book.rating) ? 'filled' : ''}`}
             ></i>
           ))}
-          <span className="rating-text">{book.rating}/5</span>
         </div>
         
-        <p className="book-summary">{book.summary?.substring(0, 100)}...</p>
+        <p className="book-summary">{book.summary?.substring(0, 80)}...</p>
         
         <div className="book-actions">
-          <Link to={`/book/${book.id}`} className="btn btn-primary">
-            Read Review
+          <Link to={`/book/${book.id}`} className="read-more-link">
+            Examine Volume
           </Link>
-          
-          <button 
-            onClick={handleFavoriteToggle} 
-            className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
-            disabled={loading}
-          >
-            <i className={`fas fa-heart ${isFavorite ? 'filled' : ''}`}></i>
-            {isFavorite ? 'Saved' : 'Save'}
-          </button>
         </div>
       </div>
     </div>

@@ -268,7 +268,53 @@ body {
   border-radius: 4px;
 }
 
-/* Optional: styling the icon inside the button */
 .btn-logout i {
   font-size: 1rem;
+}
+
+/* favorite heart */
+.book-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.fav-icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(44, 24, 16, 0.7);
+  border: 1px solid var(--gold-accent);
+  color: var(--gold-accent);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.fav-icon-btn:hover {
+  transform: scale(1.1);
+  background: var(--gold-accent);
+  color: var(--primary-dark);
+}
+
+.fav-icon-btn.active {
+  background: var(--gold-accent);
+  color: var(--primary-dark);
+}
+
+.read-more-link {
+  color: var(--gold-accent);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.read-more-link:hover {
+  text-decoration: underline;
 }
