@@ -8,6 +8,8 @@ const BookCard = ({ book }) => {
   const { user } = useAuth();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
+  const placeholderImage = "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1000&auto=format&fit=crop";
+  const secureImageUrl = book.imageUrl ? book.imageUrl.replace('http://', 'https://') : placeholderImage;
 
   useEffect(() => {
     const checkFavoriteStatus = async () => {
@@ -37,6 +39,7 @@ const BookCard = ({ book }) => {
       } else {
         await setDoc(favoriteRef, {
           ...book,
+          imageUrl: secureImageUrl, 
           addedAt: new Date().toISOString()
         });
         setIsFavorite(true);
@@ -51,7 +54,16 @@ const BookCard = ({ book }) => {
   return (
     <div className="book-card">
       <div className="book-image-container">
-        <img src={book.imageUrl} alt={book.title} className="book-image" />
+        <img 
+          src={secureImageUrl} 
+          alt={book.title} 
+          className="book-image" 
+          onError={(e) => { 
+            if (e.target.src !== placeholderImage) {
+              e.target.src = placeholderImage; 
+            }
+          }}
+        />
         <div className="book-genre">{book.genre}</div>
         <button 
           onClick={handleFavoriteToggle} 

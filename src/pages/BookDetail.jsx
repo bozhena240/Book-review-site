@@ -9,15 +9,19 @@ const BookDetail = () => {
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const placeholderImage = "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?q=80&w=1000&auto=format&fit=crop";
+
   useEffect(() => {
     const fetchBook = async () => {
       try {
         const data = await getBookById(id);
+        const rawUrl = data.volumeInfo.imageLinks?.thumbnail || data.volumeInfo.imageLinks?.smallThumbnail;
+        
         setBook({
           title: data.volumeInfo.title,
           author: data.volumeInfo.authors?.join(', '),
           description: data.volumeInfo.description,
-          imageUrl: data.volumeInfo.imageLinks?.thumbnail.replace('http://', 'https://'),
+          imageUrl: rawUrl ? rawUrl.replace('http://', 'https://') : placeholderImage,
           pageCount: data.volumeInfo.pageCount,
           publishedDate: data.volumeInfo.publishedDate
         });
@@ -36,7 +40,12 @@ const BookDetail = () => {
   return (
     <div className="book-detail">
       <div className="detail-container">
-        <img src={book.imageUrl} alt={book.title} className="detail-img" />
+        <img 
+          src={book.imageUrl} 
+          alt={book.title} 
+          className="detail-img" 
+          onError={(e) => { e.target.src = placeholderImage; }}
+        />
         <div className="detail-info">
           <h1 className="detail-title">{book.title}</h1>
           <p className="detail-author">By {book.author}</p>
