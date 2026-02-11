@@ -20,3 +20,5 @@ A sophisticated, persistent web application for scholars to track their library 
 2. Run `npm install`.
 3. Create a `.env` file with your Firebase credentials.
 4. Run `npm run dev`.
+
+**Live Site:** [https://book-review-site-b6fde.web.app](https://book-review-site-b6fde.web.app)
